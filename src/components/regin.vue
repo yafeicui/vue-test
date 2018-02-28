@@ -3,7 +3,7 @@
     <div class="center-flex-box">
       <div>
         <div class="banner">
-          登录入口
+          注册
         </div>
         <div class="box-card">
           <el-form ref="loginForm" :model="loginForm" :rules="ruleInline" label-width="90px">

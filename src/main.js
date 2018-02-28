@@ -8,6 +8,9 @@ import router from './router'
 import Element from 'element-ui'
 import '../element-variables.scss'
 Vue.use(Element)
+// 引入状态管理
+import Vuex from 'vuex'
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
