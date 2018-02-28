@@ -24,7 +24,7 @@
     <hr>
     <el-button @click="handleShow">动画</el-button>
     <transition name="fade">
-      <htButton :msg="'这是测试'" v-if="isShow"></htButton>
+      <!-- <htButton :msg="'这是测试'" v-if="isShow"></htButton> -->
     </transition>
     
   </div>
