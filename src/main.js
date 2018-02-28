@@ -4,6 +4,7 @@ import '../theme/index.css'
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 // 引入elementui
 import Element from 'element-ui'
 import '../element-variables.scss'
@@ -14,10 +15,16 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
+// 引入公共组件
+import HtPage from '@/components/publicComponents/ht-page.vue'
+Vue.component('HtPage', HtPage)
+import HtControlBar from '@/components/publicComponents/ht-control-bar.vue'
+Vue.component('HtControlBar', HtControlBar)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -21,6 +21,7 @@
         </div>
       </div>
     </div>
+    <router-view/>
   </div>
 </template>
 <script>
@@ -30,7 +31,6 @@
         loginForm: {
           account: '',
 					password: '',
-					// remember: false
         },
         ruleInline: {
 					account: [{
@@ -42,12 +42,6 @@
 							required: true,
 							message: '请填写密码',
 							trigger: 'blur'
-						},
-						{
-							type: 'string',
-							min: 1,
-							message: '密码长度不能小于5位',
-							trigger: 'blur'
 						}
 					]
 				}
@@ -55,8 +49,34 @@
     },
     methods: {
       handleSubmit() {
-        
+        var userList = this.$store.state.users;
+        var isHave = false;
+        var isRight = false;
+        userList.forEach((item,index) => {
+          if(item.username === this.loginForm.account) {
+            isHave = true;
+            if(item.password == this.loginForm.password) {
+              isRight = true;
+            }
+          }
+        })
+        if(!isHave) {
+          this.$message('没有此用户');
+          return 
+        }
+        if(!isRight) {
+          this.$message('密码不正确');
+          return 
+        }
+        if(isHave && isRight) {
+          this.$router.push({
+            path: 'pages'
+          })
+        }
       }
+    },
+    mounted () {
+      console.log(this.$store.state.users)
     }
   }
 </script>
