@@ -1,19 +1,39 @@
 <template>
-  <div class="hello">
+  <el-container>
+    <el-header style="padding: 0;">
+      <HeaderTem></HeaderTem>
+    </el-header>
     <el-container>
-      <el-header style="padding: 0;">
-        <HeaderTem></HeaderTem>
-      </el-header>
+      <el-aside style="width: 220px;padding: 0;background: #2E2E3C; minWidth: 220px">
+        <el-menu>
+          <el-submenu index="1">
+            <template slot="title"><i class="el-icon-message"></i>系统管理</template>
+            <el-menu-item-group>													
+              <el-menu-item index="/system/user" @click.native="getSelectedMenuTitle('/system/user')"><i class="icon-dot"></i>用户管理</el-menu-item>
+              <el-menu-item index="/system/role" @click.native="getSelectedMenuTitle('/system/role')"><i class="icon-dot"></i>角色管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title"><i class="el-icon-message"></i>反欺诈</template>
+            <el-menu-item-group>													
+              <el-menu-item index="/antiFraud/rule" @click.native="getSelectedMenuTitle('/antiFraud/rule')"><i class="icon-dot"></i>规则分析</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title"><i class="el-icon-message"></i>授信</template>
+            <el-menu-item-group>													
+              <el-menu-item index="/sx/history" @click.native="getSelectedMenuTitle('/sx/history')"><i class="icon-dot"></i>历史信息</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
       <el-container>
-        <el-aside style="width: 220px;padding: 0;background: #2E2E3C">
-          <LayOut></LayOut>
-        </el-aside>
         <el-main style="background: #E9EEF3;">
-          <ShowArea></ShowArea>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
-  </div>
+  </el-container>
 </template>
 
 <script>
@@ -41,10 +61,27 @@ export default {
     }
   },
   methods: {
-    
+    getSelectedMenuTitle(url) {
+      this.$router.push({
+        path: url
+      })
+    },
+    isLogin() {
+      var userId = localStorage.getItem("userId");
+      var userName = localStorage.getItem("userName");
+      if (userId && userName) return true;
+      return false;
+    }
   },
   mounted () {
     
+  },
+  beforeMount () {
+    if (this.isLogin()) {
+      this.user = JSON.parse(localStorage.getItem("user"));
+    } else {
+      this.$router.push("/login");
+    }
   }
 }
 </script>
