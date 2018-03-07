@@ -5,7 +5,7 @@
     </el-header>
     <el-container>
       <el-aside style="width: 220px;padding: 0;background: #2E2E3C; minWidth: 220px">
-        <el-menu>
+        <el-menu :default-openeds="['1']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>系统管理</template>
             <el-menu-item-group>													

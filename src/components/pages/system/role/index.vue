@@ -18,7 +18,7 @@
 					</template>
 				</el-table-column>
 			</el-table>
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage2" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="sizes, prev, pager, next" :total="1000"></el-pagination>
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="sizes, prev, pager, next" :total="1000"></el-pagination>
 		</div>
 
 		<add-dialog ref="addDialog" @on-success="addSuccess" :roleList="roleList"></add-dialog>
@@ -121,7 +121,9 @@
             message: '已取消删除'
           });          
         });
-			}
+			},
+			handleSizeChange() {},
+      handleCurrentChange() {}
 		},
 		beforeMount() {
 			
