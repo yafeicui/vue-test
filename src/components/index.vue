@@ -5,7 +5,7 @@
     </el-header>
     <el-container>
       <el-aside style="width: 220px;padding: 0;background: #2E2E3C; minWidth: 220px">
-        <el-menu :default-openeds="['1']">
+        <el-menu>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>系统管理</template>
             <el-menu-item-group>													
@@ -38,8 +38,7 @@
 
 <script>
 import HeaderTem from '@/components/header'
-import LayOut from '@/components/layout'
-import ShowArea from '@/components/pages/system/user.vue'
+import User from './pages/system/user'
 export default {
   name: 'cui',
   data () {
@@ -49,8 +48,6 @@ export default {
   },
   components: {
     HeaderTem,
-    LayOut,
-    ShowArea
   },
   directives: {
     focus: {
@@ -80,7 +77,7 @@ export default {
     if (this.isLogin()) {
       this.user = JSON.parse(localStorage.getItem("user"));
     } else {
-      this.$router.push("/login");
+      this.$router.push("/");
     }
   }
 }

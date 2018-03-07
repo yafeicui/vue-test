@@ -73,7 +73,7 @@
 					localStorage.setItem("userName", this.loginForm.account);
 					localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
           this.$router.push({
-            path: '/system/user'
+            path: '/system'
           })
         }
       }

@@ -15,19 +15,19 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/login',
+      path: '/',
       // redirect: "",
       component: login,
     },
     {
-      path: '/',
-      redirect: "/login",
+      path: '/system',
+      redirect: "/system/user",
       component: pages,
       children: [
-        {path: 'system/user', component: user},
-        {path: 'system/role', component: role},
-        {path: 'antiFraud/rule', component: rule},
-        {path: 'sx/history', component: history},
+        {path: '/system/user', component: user},
+        {path: '/system/role', component: role},
+        {path: '/antiFraud/rule', component: rule},
+        {path: '/sx/history', component: history},
       ]
     }
   ]

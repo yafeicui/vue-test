@@ -32,7 +32,7 @@
       logOut() {
         console.log(111)
         this.$router.push({
-          path: '/login'
+          path: '/'
         })
       }
     },
