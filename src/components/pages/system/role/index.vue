@@ -18,9 +18,11 @@
 					</template>
 				</el-table-column>
 			</el-table>
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="sizes, prev, pager, next" :total="1000"></el-pagination>
+			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="10" layout="sizes, prev, pager, next" :total="2"></el-pagination>
 		</div>
-
+    <p>{{num1}}</p>
+    <el-button @click="changeState">改变状态管理数据</el-button>
+    <el-button @click="handleDesCount">count减1</el-button>
 		<add-dialog ref="addDialog" @on-success="addSuccess" :roleList="roleList"></add-dialog>
 		<edit-dialog ref="editDialog" @on-success="editSuccess" :roleList="roleList"></edit-dialog>
 	</ht-page>
@@ -28,7 +30,8 @@
 
 <script>
 	import AddDialog from "./role_add.vue"
-	import EditDialog from "./role_edit.vue"
+  import EditDialog from "./role_edit.vue"
+  import {mapState, mapActions, mapMutations} from 'Vuex'
 	export default {
 		data() {
 			return {
@@ -51,14 +54,17 @@
 					}
 				],
 				num: 3,
-				id: 0
+        id: 0,
+        num1: 0
 			}
-		},
+    },
 		components: {
 			AddDialog,
 			EditDialog
-		},
+    },
 		methods: {
+      ...mapActions(['changeCount', 'desCount']),
+      ...mapMutations(['desMuCount']),
 			handleSearch() {
 				// var arr = [];
 				// var midd
@@ -121,12 +127,26 @@
             message: '已取消删除'
           });          
         });
-			},
+      },
+      getState() {
+        this.num1 = this.$store.state.count
+        // console.log(this.num1, 12)
+			  // console.log(this.$store.state, 55)
+      },
 			handleSizeChange() {},
-      handleCurrentChange() {}
+      handleCurrentChange() {},
+      // 改变状态管理数据
+      changeState() {
+        this.changeCount(3)
+        this.getState();
+      },
+      handleDesCount() {
+        this.desMuCount();
+        this.getState();
+      }
 		},
 		beforeMount() {
-			
+      this.getState()
 		}
 	}
 </script>

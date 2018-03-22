@@ -18,17 +18,15 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>  
+<style scoped>  
   .control-bar-wrap {     
     color: gray;    
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
-
-    .search-input-condition {
-      width: 110px;
-    }
-  }    
-  
+  }   
+  .search-input-condition {
+    width: 110px;
+  } 
 </style>
 

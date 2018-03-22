@@ -10,7 +10,8 @@ const store = new Vuex.Store({
   state: {
     users:[
       {username: 'cui', password: 111111}
-    ]
+    ],
+    count: 1
   },
   actions,
   getters,

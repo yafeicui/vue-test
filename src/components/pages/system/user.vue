@@ -30,7 +30,7 @@
 						</template>
 					</el-table-column>
 				</el-table>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="sizes, prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="10" layout="sizes, prev, pager, next" :total="2"></el-pagination>
 			</div>
       
 		</div>
