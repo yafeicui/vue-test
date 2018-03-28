@@ -49,33 +49,53 @@
     },
     methods: {
       handleSubmit() {
-        var userList = this.$store.state.users;
-        var isHave = false;
-        var isRight = false;
-        userList.forEach((item,index) => {
-          if(item.username === this.loginForm.account) {
-            isHave = true;
-            if(item.password == this.loginForm.password) {
-              isRight = true;
-            }
+        var loginData = {
+          name: this.loginForm.account,
+          password: this.loginForm.password
+        }
+        this.$http({
+          url: '/api/login',
+          method: 'post',
+          data: loginData
+        }).then((res) => {
+          if(res.data.code !== 9000) {
+            this.$message(res.data.message);
+          }else {
+            localStorage.setItem("userId", res.data.password);
+            localStorage.setItem("userName", res.data.account);
+            localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
+            this.$router.push({
+              path: '/system'
+            })
           }
         })
-        if(!isHave) {
-          this.$message('没有此用户');
-          return 
-        }
-        if(!isRight) {
-          this.$message('密码不正确');
-          return 
-        }
-        if(isHave && isRight) {
-          localStorage.setItem("userId", this.loginForm.password);
-					localStorage.setItem("userName", this.loginForm.account);
-					localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
-          this.$router.push({
-            path: '/system'
-          })
-        }
+        // var userList = this.$store.state.users;
+        // var isHave = false;
+        // var isRight = false;
+        // userList.forEach((item,index) => {
+        //   if(item.username === this.loginForm.account) {
+        //     isHave = true;
+        //     if(item.password == this.loginForm.password) {
+        //       isRight = true;
+        //     }
+        //   }
+        // })
+        // if(!isHave) {
+        //   this.$message('没有此用户');
+        //   return 
+        // }
+        // if(!isRight) {
+        //   this.$message('密码不正确');
+        //   return 
+        // }
+        // if(isHave && isRight) {
+        //   localStorage.setItem("userId", this.loginForm.password);
+				// 	localStorage.setItem("userName", this.loginForm.account);
+				// 	localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
+        //   this.$router.push({
+        //     path: '/system'
+        //   })
+        // }
       }
     },
     mounted () {

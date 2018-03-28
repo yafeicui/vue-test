@@ -1,8 +1,8 @@
 <template>
 	<ht-page title="用户管理">
 		<ht-control-bar>
-			<el-input v-model.trim="ruleForm.account" clearable placeholder="账号" class="search-input-condition"></el-input>
-			<el-button type="primary" round @click="handleSearch">搜索</el-button>
+			<el-input v-model.trim="ruleForm.account" clearable placeholder="账号" class="search-input-condition" style="width: 150px"></el-input>
+			<el-button type="primary" round @click="handleGetTableData">搜索</el-button>
 		</ht-control-bar>
 
 		<div class="ht-flex">
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 			<div class="table-box">
-				<el-table class="table-demo" :data="userList" stripe header-row-class-name="header-row">
+				<el-table class="table-demo" :data="tableData" stripe header-row-class-name="header-row">
 					<el-table-column label="账号" prop="account" align="center"></el-table-column>
 					<el-table-column label="姓名" prop="name" align="center"></el-table-column>
 					<el-table-column label="部门" prop="deptName" align="center"></el-table-column>
@@ -30,7 +30,7 @@
 						</template>
 					</el-table-column>
 				</el-table>
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="10" layout="sizes, prev, pager, next" :total="2"></el-pagination>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[10, 20, 30, 40]" :page-size="pageSize" layout="sizes, prev, pager, next" :total="total"></el-pagination>
 			</div>
       
 		</div>
@@ -41,58 +41,13 @@
 	export default {
 		data() {
 			return {
-				deptList: [
-          {
-            id: 1,
-            label: '一级 1',
-            children: [{
-              id: 4,
-              label: '二级 1-1',
-              children: [{
-                id: 9,
-                label: '三级 1-1-1'
-              }, {
-                id: 10,
-                label: '三级 1-1-2'
-              }]
-            }]
-          }, {
-            id: 2,
-            label: '一级 2',
-            children: [{
-              id: 5,
-              label: '二级 2-1'
-            }, {
-              id: 6,
-              label: '二级 2-2'
-            }]
-          }, {
-            id: 3,
-            label: '一级 3',
-            children: [{
-              id: 7,
-              label: '二级 3-1'
-            }, {
-              id: 8,
-              label: '二级 3-2'
-            }]
-          }
-        ],
+				deptList: [],
 				ruleForm: {
 					account: ""
         },
-        userList: [
-          {
-            "account":"xin.jin",
-            "deptName":"华通银行",
-            "name":"金鑫",
-          },
-          {
-            "account":"zhaojin.jiang",
-            "deptName":"华通银行",
-            "name":"赵金江",
-          }
-        ]
+        tableData: [],
+        total: 1000,
+        pageSize: 1
 			};
 		},
 		components: {
@@ -100,21 +55,100 @@
 			// SetRoleDialog
 		},
 		methods: {
-			handleSearch() {},
       // 切换树
-      handleGetDeptId() {},
-      handleResetPw() {},
-      handleFreeze() {},
+      handleGetDeptId(val) {
+        let param = {
+          id: val.id
+        }
+        this.$http({
+          url: '/api/system/user/treeclick',
+          method: 'post',
+          data: param
+        }).then((res) => {
+          let middleArr = res.data.data;
+          let resArr = [];
+          if(middleArr.children) {
+            resArr.push(middleArr)
+            middleArr.children.forEach(ele => {
+              resArr.push(ele);
+              if(ele.children) {
+                this.addItem(resArr, ele.children);
+              }
+            })
+          }else {
+            resArr.push(middleArr)
+          }
+          this.tableData = resArr;
+          this.total = resArr.length;
+        })
+      },
+      addItem(arr, list) {
+        list.forEach(ele => {
+          arr.push(ele);
+          if(ele.children) {
+            this.addItem(arr, ele.children)
+          }
+        })
+      },
+      // 获取树数据
+      handleGetTreeList() {
+        this.$http({
+          url: '/api/system/user/treelist',
+          method: 'get'
+        }).then((res) => {
+          let treeList = res.data.data;
+          let middleArr = [];
+          this.getDeptList(treeList, middleArr);
+        })
+      },
+      getDeptList(treeList, middleArr) {
+        treeList.forEach((item) => {
+          item.label = item.name;
+          treeList.forEach((ele) => {
+            if(item.id === ele.pid) {
+              if(item.children) {
+                item.children.push(ele);
+              }else {
+                item.children = [];
+                item.children.push(ele)
+              }
+            }
+          })
+        })
+        treeList.forEach(ele => {
+          if(ele.pid === 0) {
+            middleArr.push(ele)
+          }
+        })
+        this.deptList = middleArr;
+      },
       handlejump() {
         this.$router.push({
           path: '/sx/history'
         })
       },
-      handleSizeChange() {},
-      handleCurrentChange() {}
+      handleSizeChange(val) {
+        // this.pageSize = val;
+      },
+      handleCurrentChange(val) {
+        // console.log(val, 89)
+      },
+      handleGetTableData() {
+        this.$http({
+          url: '/api/system/user/list',
+          method: 'get',
+          params: {
+            account: this.ruleForm.account
+          }
+        }).then((res) => {
+          this.tableData = res.data.data;
+          this.total = res.data.data.length;
+        })
+      }
 		},
 		beforeMount() {
-
+      this.handleGetTableData();
+      this.handleGetTreeList();
 		}
 	};
 </script>

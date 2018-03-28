@@ -15,6 +15,9 @@ Vue.use(Vuex)
 // 引入bus
 import VueBus from 'vue-bus';
 Vue.use(VueBus);
+// 引入axios
+import axios from 'axios'
+Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
 
