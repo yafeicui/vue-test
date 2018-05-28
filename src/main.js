@@ -16,8 +16,11 @@ Vue.use(Vuex)
 import VueBus from 'vue-bus';
 Vue.use(VueBus);
 // 引入axios
-import axios from 'axios'
-Vue.prototype.$http = axios
+// import axios from 'axios'
+// Vue.prototype.$http = axios
+
+import { createHttp } from './http/axios';
+createHttp();
 
 Vue.config.productionTip = false
 
