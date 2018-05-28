@@ -4,7 +4,7 @@ import axios from 'axios'
 // import { currencyType } from '../utils/global-filters';
 
 export function createHttp() {
-  Vue.prototype.$http = axios
+  Vue.prototype.$http = axios 
   initInterceptersRequest()
   initInterceptersResponse()
 }
