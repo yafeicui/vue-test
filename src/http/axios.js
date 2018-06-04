@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import axios from 'axios'
 // import qs from 'qs'
-// import { currencyType } from '../utils/global-filters';
-
+var vue = null;
 export function createHttp() {
-  Vue.prototype.$http = axios 
+  Vue.prototype.$http = axios
   initInterceptersRequest()
   initInterceptersResponse()
 }
@@ -15,14 +14,16 @@ const initInterceptersRequest = () => {
     return config
   })
 }
-
+export function bindVue($vue) {
+  vue = $vue
+}
 const initInterceptersResponse = () => {
   axios.interceptors.response.use(function (response) {
     if (parseInt(response.data.code) === 9000 || parseInt(response.data.respCode) === 9000) {
       return response
     } else {
       var msg = response.data.respDesc ? response.data.respDesc : response.data.message
-      // vue.$message({ message: msg, type: 'warning' });
+      vue.$message({ message: msg, type: 'warning' });
       return Promise.reject({})
     }
   }, function (error) {

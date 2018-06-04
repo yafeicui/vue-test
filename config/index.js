@@ -14,7 +14,11 @@ module.exports = {
       '/api': {
         target: 'http://127.0.0.1:8005',
         changeOrigin: true,
-      }
+      },
+      // `/${PAGINATION_CONTENT_SX}`: {
+      //   target: 'http://127.0.0.1:8005',
+      //   changeOrigin: true,
+      // }
     },
 
     // Various Dev Server settings

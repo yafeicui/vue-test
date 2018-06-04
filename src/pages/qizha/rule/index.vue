@@ -1,28 +1,38 @@
 <template>
   <ht-page title="规则分析">
-
     <div class="firstBar">
       <echartBar :echartData="firstEchartData"></echartBar>
     </div>
     <div class="firstBar">
       <echartBar :echartData="secondEchartData"></echartBar>
     </div>
-    
+    <ht-table ref="htTable" :ajaxConfig="tableAjaxConfig" :listKey="listKey" :paginationKey="paginationKey">
+      <el-table-column align="center" prop="clientName" label="客户名称" ></el-table-column>
+      <el-table-column align="center" prop="clientId" label="客户编号"></el-table-column>
+    </ht-table>
   </ht-page>
 </template>
 <script>
   import echarts from "echarts";
-  import echartBar from "@/components/publicComponents/ht-echart-bar.vue"
+  import echartBar from "@/components/publicComponents/ht-echart-bar.vue";
+  import htTable from '@/components/publicComponents/ht-table'
   export default {
     data() {
       return {
         width: '100%',
         firstEchartData: {},
-        secondEchartData: {}
+        secondEchartData: {},
+        listKey:'data',
+        paginationKey: {  // 分页信息字段
+          size: 'size',
+          current: 'current',
+          total: 'totalElements'
+        }
       }
     },
     components: {
-      echartBar
+      echartBar,
+      htTable
     },
     methods: {
       firstEchart() {
@@ -99,11 +109,20 @@
             ]
           }
         }
-      }
+      },
+      // 获取表格数据
+      handleGetPaginationInfo() {
+        this.tableAjaxConfig = {
+          url: '/api/system/role/tableList',
+          method: "get",
+          params: Object.assign({}, this.ruleForm)
+        }
+      },
     },
     beforeMount() {
       this.firstEchart();
       this.secondEchart();
+      this.handleGetPaginationInfo()
     }
   }
 </script>

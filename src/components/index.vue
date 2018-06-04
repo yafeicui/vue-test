@@ -4,50 +4,43 @@
       <HeaderTem></HeaderTem>
     </el-header>
     <el-container>
-      <el-aside style="width: 220px;padding: 0;background: #2E2E3C; minWidth: 220px">
-        <el-menu>
-          <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>系统管理</template>
-            <el-menu-item-group>													
-              <el-menu-item index="/system/user" @click.native="getSelectedMenuTitle('/system/user')"><i class="icon-dot"></i>用户管理</el-menu-item>
-              <el-menu-item index="/system/role" @click.native="getSelectedMenuTitle('/system/role')"><i class="icon-dot"></i>角色管理</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-message"></i>反欺诈</template>
-            <el-menu-item-group>													
-              <el-menu-item index="/antiFraud/rule" @click.native="getSelectedMenuTitle('/antiFraud/rule')"><i class="icon-dot"></i>规则分析</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title"><i class="el-icon-message"></i>授信</template>
-            <el-menu-item-group>													
-              <el-menu-item index="/sx/history" @click.native="getSelectedMenuTitle('/sx/history')"><i class="icon-dot"></i>历史信息</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
-      </el-aside>
-      <el-container>
-        <el-main style="background: #E9EEF3;">
+      <el-aside width="220px">
+        <ht-menu :menus="allmenus" @select="handleSelect" router unique-opened></ht-menu>
+			</el-aside>
+      <el-container class="right-content-wrap">
+        <el-main>
           <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
+
+    <!-- <el-container>
+			<el-aside width="220px">
+        <ht-menu :menus="allmenus" @select="handleSelect" router unique-opened></ht-menu>
+			</el-aside>
+			<el-container class="right-content-wrap">
+				<el-main>
+					<router-view></router-view>
+				</el-main>
+			</el-container>
+		</el-container> -->
+
   </el-container>
 </template>
 
 <script>
+import htMenu from '@/components/ht-menu';
 import HeaderTem from '@/components/header'
-import User from './pages/system/user'
 export default {
   name: 'cui',
   data () {
     return {
-      
+      allmenus: []
     }
   },
   components: {
     HeaderTem,
+    htMenu
   },
   directives: {
     focus: {
@@ -68,6 +61,9 @@ export default {
       var userName = localStorage.getItem("userName");
       if (userId && userName) return true;
       return false;
+    },
+    handleSelect() {
+
     }
   },
   mounted () {
@@ -79,6 +75,7 @@ export default {
     } else {
       this.$router.push("/");
     }
+    this.allmenus = JSON.parse(localStorage.getItem("users")).menus;
   }
 }
 </script>
@@ -86,11 +83,34 @@ export default {
   
 </style>
 <style>
+  .el-aside {
+  background-color: #d3dce6;
+  color: #333;
+  /* text-align: center; */
+  height: 100%;
+}
+
+.el-main {
+  background-color: #F7F8FC;
+  color: #333;
+  width: calc(90% - 200);
+  min-width: 1000px;
+  overflow: auto;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+  height: 100%;
+}
   .el-container {
     height: 100%;
   }
   .el-menu {
     border-right: 0;
+  }
+  .ht-contain {
+    overflow: auto;
+    margin: -20px;
   }
   .el-menu-item-group__title {
     height: 0;
@@ -112,6 +132,10 @@ export default {
   }
   .el-submenu__title:hover {
     background: #48485B;
+  }
+  .right-content-wrap {
+    overflow: auto;
+    width: calc(100% - 210px) !important;
   }
 </style>
 
