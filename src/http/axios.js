@@ -10,6 +10,7 @@ export function createHttp() {
 var configArr = [];
 const initInterceptersRequest = () => {
   axios.interceptors.request.use(function (config) {
+    // axios.defaults.headers.common['accessToken'] = JSON.parse(localStorage.getItem('users')).token
     // console.log(config, '请求')
     return config
   })

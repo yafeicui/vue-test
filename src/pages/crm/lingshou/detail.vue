@@ -368,6 +368,7 @@
       }
     },
     beforeMount() {
+      // console.log(this.$route.params, 'par') //路由通过name和 params传值
       this.handleGetFormData();//form表单
       this.handleGetTableData();//表格侧边
       this.handleSearchBarData();//柱状图默认查询当日数据

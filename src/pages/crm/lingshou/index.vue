@@ -172,6 +172,13 @@ export default {
           clientId: row.clientId
         }
       })
+      // 路由通过name和params传值跳转， 参数不会拼接在url上
+      // this.$router.push({
+      //   name: "lsdetail",
+      //   params: {
+      //     clientId: row.clientId
+      //   }
+      // })
     },
     handleResetClick() {
       this.orgName = '';

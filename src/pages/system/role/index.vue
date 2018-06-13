@@ -33,9 +33,10 @@
 </template>
 
 <script>
+  import Vue from 'vue';
 	import AddDialog from "./role_add.vue"
   import EditDialog from "./role_edit.vue"
-  import htTable from '@/components/publicComponents/ht-table'
+  // import htTable from '@/components/publicComponents/ht-table'
   import {mapState, mapActions, mapMutations} from 'Vuex'
 	export default {
 		data() {
@@ -62,7 +63,7 @@
 		components: {
 			AddDialog,
       EditDialog,
-      htTable
+      // htTable
     },
 		methods: {
       ...mapActions(['changeCount', 'desCount']),
@@ -218,6 +219,33 @@
       this.getState()
       this.handleGetPaginationInfo();
       this.handleTest();
-		}
+    },
+    beforeRouteEnter (to, from, next) {
+      // console.log(to, from, 88888)
+      if(from.path === "/sx/history") {
+        Vue.prototype.$confirm('确定由授信跳转到当前页面？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          next();
+        }).catch(() => {
+          next(false);
+        });
+      }else {
+        next();
+      }
+    },
+    beforeRouteLeave(to, from, next) {
+      Vue.prototype.$confirm('确定离开当前页面？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        next();
+      }).catch(() => {
+        next(false);
+      });
+    }
 	}
 </script>

@@ -32,6 +32,8 @@ import HtControlBar from '@/components/publicComponents/ht-control-bar.vue'
 Vue.component('HtControlBar', HtControlBar)
 import HtCard from '@/components/publicComponents/ht-card.vue'
 Vue.component('HtCard', HtCard)
+import HtTable from '@/components/publicComponents/ht-table.vue'
+Vue.component('HtTable', HtTable)
 
 /* eslint-disable no-new */
 const vue = new Vue({
