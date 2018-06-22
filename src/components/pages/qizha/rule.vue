@@ -1,119 +1,72 @@
 <template>
-  <ht-page title="规则分析">
+  <div class="dragTable">
+    <td-draggable element="el-table" :list="tableData" :data="tableData" :options="dragOptions" dragSelector="tbody" @end='endDrag' stripe highlight-current-row  header-row-class-name="header-row">
+      <el-table-column resizable show-overflow-tooltip prop="name" label="姓名"></el-table-column>
+      <el-table-column resizable show-overflow-tooltip prop="age" label="年龄"></el-table-column>
+      <!-- <el-table-column  type="index" label="序号" width="70">
+        <template slot-scope="scope">
+          {{1+scope.$index}}
+        </template>
+      </el-table-column> -->
 
-    <div class="firstBar">
-      <echartBar :echartData="firstEchartData"></echartBar>
-    </div>
-    <div class="firstBar">
-      <echartBar :echartData="secondEchartData"></echartBar>
-    </div>
-    
-  </ht-page>
+      <!-- <template v-for="column in columns">
+        <el-table-column v-if="column.formatter" :fixed="column.fixed" resizable show-overflow-tooltip :prop="column.prop" :key="column.prop" :label="column.label" :formatter="column.formatter" >
+        </el-table-column>
+        <el-table-column  v-else-if="column.operations" :fixed="column.fixed" :prop="column.prop" :label="column.label" :key="column.prop" >
+          <template slot-scope="scope">
+            <el-button v-for="(operate, index) in column.operations" :key="index" type="text" @click.native.prevent="operate.func(scope.$index, scope.row)">{{operate.label}}</el-button>
+          </template>
+        </el-table-column>
+
+        <el-table-column v-else resizable show-overflow-tooltip :fixed="column.fixed" :prop="column.prop"   :label="column.label" :key="column.prop" >
+        </el-table-column>
+      </template> -->
+    </td-draggable>
+  </div>
 </template>
+
 <script>
-  import echarts from "echarts";
-  import echartBar from "@/components/publicComponents/ht-echart-bar.vue"
-  export default {
-    data() {
-      return {
-        width: '100%',
-        firstEchartData: {},
-        secondEchartData: {}
-      }
-    },
-    components: {
-      echartBar
-    },
-    methods: {
-      firstEchart() {
-        this.firstEchartData = {
-          size: {
-            width: this.width,
-            height: '300px'
-          },
-          barData: {
-            title: {
-              text: '规则1'
-            },
-            legend: {
-                data:['Forest', 'Steppe', 'Desert', 'Wetland']
-            },
-            xAxis: {
-              type: 'category',
-              axisTick: {show: false},
-              data: ['2012', '2013', '2014', '2015', '2016']
-            },
-            series: [
-              {
-                  name: 'Forest',
-                  type: 'bar',
-                  barGap: 0,
-                  data: [320, 332, 301, 334, 390]
-              },
-              {
-                  name: 'Steppe',
-                  type: 'bar',
-                  data: [220, 182, 191, 234, 290]
-              },
-              {
-                  name: 'Desert',
-                  type: 'bar',
-                  data: [150, 232, 201, 154, 190]
-              },
-              {
-                  name: 'Wetland',
-                  type: 'bar',
-                  data: [98, 77, 101, 99, 40]
-              }
-            ]
-          }
-        }
+import TdDraggable from '@/components/draggable'
+export default {
+  name: 'elementDraggableTable',
+  data () {
+    return {
+      dragOptions: {
+        draggable: '.el-table__row'
       },
-      secondEchart() {
-        this.secondEchartData = {
-          size: {
-            width: this.width,
-            height: '300px'
-          },
-          barData: {
-            title: {
-              text: '规则2'
-            },
-            legend: {
-                data:['销售额']
-            },
-            xAxis: {
-              type: 'category',
-              axisTick: {show: false},
-              data: ['2012', '2013', '2014', '2015', '2016']
-            },
-            series:[
-              {
-                type: 'bar',
-                itemStyle: {
-                  color: 'green',
-                  borderColor: '#ccc'
-                },
-                data: [1111, 1242, 987, 1536, 888]
-              }
-            ]
-          }
+      tableData: [
+        { name: 'zhang', age: 12},
+        { name: 'luo', age: 33},
+        { name: 'tang', age: 34},
+        { name: 'yang', age: 23},
+        { name: 'wang', age: 13},
+      ],
+      columns: [{
+        prop: 'no',
+        label: '盘点单号'
+      }, {
+        prop: 'type',
+        label: '盘点类型',
+        formatter: function (item) {
+          return 'cc'
         }
-      }
-    },
-    beforeMount() {
-      this.firstEchart();
-      this.secondEchart();
+      }]
+    }
+  },
+  components: {
+    TdDraggable
+  },
+  methods: {
+    endDrag (data) {
+      console.log('data: ', data)
+      console.log(this.tableData)
     }
   }
+}
 </script>
-<style scoped>
-  .rule {
-    display: flex;
-    justify-content: space-between;
-  }
-  .firstBar {
-    width: 50%;
-    float: left;
+<style> 
+  .header-row th {
+    background: rgb(204, 199, 199)!important;
+    color: #fff;
   }
 </style>
