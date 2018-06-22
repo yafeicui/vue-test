@@ -31,15 +31,15 @@ function computeVmIndex(vnodes, element) {
 }
 
 function computeIndexes(slots, children, isTransition) {
-  console.log("----computeIndexes ____", slots);
+  // console.log("----computeIndexes ____", slots);
   if (!slots) {
     return [];
   }
 
   const elmFromNodes = slots.map(elt => elt.elm);
-  console.log("----elmFromNodes ____", elmFromNodes);
+  // console.log("----elmFromNodes ____", elmFromNodes);
   const rawIndexes = [...children].map(elt => elmFromNodes.indexOf(elt));
-  console.log("----rawIndexes ____", rawIndexes);
+  // console.log("----rawIndexes ____", rawIndexes);
   return isTransition ? rawIndexes.filter(ind => ind !== -1) : rawIndexes;
 }
 

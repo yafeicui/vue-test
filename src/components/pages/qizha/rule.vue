@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     endDrag (data) {
-      console.log('data: ', data)
-      console.log(this.tableData)
+      // console.log('data: ', data)
+      // console.log(this.tableData)
     }
   }
 }
