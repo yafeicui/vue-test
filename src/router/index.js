@@ -18,11 +18,13 @@ const router = new Router({
             next()
           }},	
         { path: '/system/role', component: resolve => require(['@/pages/system/role'], resolve) },	
+        
         { path: '/sx/history', component: resolve => require(['@/pages/sx/history'], resolve) },	
         { path: '/antiFraud/rule', component: resolve => require(['@/pages/qizha/rule'], resolve) },	
         { path: '/crm/customer-info', component: resolve => require(['@/pages/crm/customer-info'], resolve) },
         { path: '/crm/custinfo/retail', component: resolve => require(['@/pages/crm/lingshou'], resolve) },	
-        { path: '/crm/lingshou/detail',name: 'lsdetail', component: resolve => require(['@/pages/crm/lingshou/detail'], resolve) },	
+        { path: '/crm/lingshou/detail',name: 'lsdetail', component: resolve => require(['@/pages/crm/lingshou/detail'], resolve) },
+        { path: '/table', component: resolve => require(['@/pages/special-table'], resolve) },		
       ]
     }
   ]
