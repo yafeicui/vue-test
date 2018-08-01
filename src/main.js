@@ -10,8 +10,8 @@ import Element from 'element-ui'
 import '../element-variables.scss'
 Vue.use(Element)
 // 引入状态管理
-import Vuex from 'vuex'
-Vue.use(Vuex)
+// import Vuex from 'vuex'
+// Vue.use(Vuex)
 // 引入bus
 import VueBus from 'vue-bus';
 Vue.use(VueBus);
