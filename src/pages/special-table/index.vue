@@ -8,6 +8,7 @@
     <el-button @click="getMongodb">获取mongodb数据</el-button>
     <el-button @click="updateMongodb">修改mongodb数据</el-button>
     <el-button @click="delMongodb">删除mongodb数据</el-button>
+    <el-button @click="fetchTable">拖拽后的table</el-button>
   </div>
 </template>
 
@@ -44,8 +45,11 @@ export default {
   },
   methods: {
     endDrag (data) {
-      // console.log('data: ', data)
+      console.log('data: ', 'tableData数据')
       // console.log(this.tableData)
+    },
+    fetchTable() {
+      console.log(this.tableData, '拖拽后的table')
     },
     insertMongodb() {
       this.$http({
