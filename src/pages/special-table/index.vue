@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     endDrag (data) {
-      console.log('data: ', 'tableData数据')
+      console.log('data: ', data)
       // console.log(this.tableData)
     },
     fetchTable() {
