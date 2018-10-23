@@ -25,6 +25,7 @@ const router = new Router({
         { path: '/crm/custinfo/retail', component: resolve => require(['@/pages/crm/lingshou'], resolve) },	
         { path: '/crm/lingshou/detail',name: 'lsdetail', component: resolve => require(['@/pages/crm/lingshou/detail'], resolve) },
         { path: '/table', component: resolve => require(['@/pages/special-table'], resolve) },		
+        { path: '/json', component: resolve => require(['@/pages/json'], resolve) },		
       ]
     }
   ]
