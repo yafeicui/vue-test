@@ -19,64 +19,71 @@
 </template>
 
 <script>
-	export default {
-		props: ['roleList'],
-		data() {
-			return {
-				isShow: false,
-				editRole: {
-          roleName: "",
-          roleValue:"",
-          tips: "",
-				},
-				ruleValidate: {
-					roleName: [{
-						required: true,
-						message: '角色名称不能为空',
-						trigger: 'blur'
-					}],
-					roleValue: [{
-						required: true,
-						message: '角色值不能为空',
-						trigger: 'blur'
-					}]
-				},
-				isHave:false,
-				id: 0
-			}
-		},
-		methods: {
-			show(role) {
-				this.isShow = true;
-				this.id = role.id;
-        this.editRole = Object.assign(this.editRole,role)
-			},
-			handleSubmit() {
-				this.isHave = false;
-				this.$refs["editRoleForm"].validate((valid) => {
-					this.roleList.forEach((item) => {
-						if(item.roleName == this.editRole.roleName && item.id != this.id) {
-							this.isHave = true;
-						}
-					})
-					if(this.isHave) {
-						this.$message({message: '角色名重复', type: 'error'});
-						return 
-					}else {
-						this.$message({
-							type: 'success',
-							message: '修改成功!'
-						});
-						this.$emit("on-success", this.editRole)
-						this.handleCancel()
-					}
-				})
+export default {
+  props: ['roleList'],
+  data() {
+    return {
+      isShow: false,
+      editRole: {
+        roleName: '',
+        roleValue: '',
+        tips: ''
       },
-			handleCancel() {
-				this.editRole.tips = ""
-				this.$refs.editRoleForm.resetFields();
-				this.isShow = false
-			}
-		}
-	}
+      ruleValidate: {
+        roleName: [
+          {
+            required: true,
+            message: '角色名称不能为空',
+            trigger: 'blur'
+          }
+        ],
+        roleValue: [
+          {
+            required: true,
+            message: '角色值不能为空',
+            trigger: 'blur'
+          }
+        ]
+      },
+      isHave: false,
+      id: 0
+    };
+  },
+  mounted() {
+    console.log(this.$parent, '父类');
+  },
+  methods: {
+    show(role) {
+      this.isShow = true;
+      this.id = role.id;
+      this.editRole = Object.assign(this.editRole, role);
+    },
+    handleSubmit() {
+      this.isHave = false;
+      this.$refs['editRoleForm'].validate(valid => {
+        this.roleList.forEach(item => {
+          if (item.roleName == this.editRole.roleName && item.id != this.id) {
+            this.isHave = true;
+          }
+        });
+        if (this.isHave) {
+          this.$message({ message: '角色名重复', type: 'error' });
+          return;
+        } else {
+          this.$message({
+            type: 'success',
+            message: '修改成功!'
+          });
+          this.$emit('on-success', this.editRole);
+          this.handleCancel();
+        }
+      });
+    },
+    handleCancel() {
+      this.editRole.tips = '';
+      this.$refs.editRoleForm.resetFields();
+      this.isShow = false;
+    }
+  }
+};
 </script>

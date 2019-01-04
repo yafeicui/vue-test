@@ -19,56 +19,63 @@
 </template>
 
 <script>
-	export default {
-		props: ['roleList'],
-		data() {
-			return {
-				isShow: false,
-				role: {
-          roleName: "",
-          roleValue:"",
-					tips: "",
-				},
-				ruleValidate: {
-					roleName: [{
-						required: true,
-						message: '角色名称不能为空',
-						trigger: 'blur'
-          }],
-          roleValue: [{
-						required: true,
-						message: '角色值不能为空',
-						trigger: 'blur'
-          }]
-				},
-				isHave: false
-			}
-		},
-		methods: {
-			show() {
-        this.isShow = true
-			},
-			handleSubmit() {
-				this.isHave = false;
-				this.$refs["addRoleForm"].validate((valid) => {
-					this.roleList.forEach((item) => {
-						if(item.roleName == this.role.roleName) {
-							this.isHave = true;
-						}
-					})
-					if(this.isHave) {
-						this.$message({message: '角色名重复', type: 'error'});
-					}else {
-						this.$emit("on-success", this.role)
-						this.handleCancel()
-					}
-				})
+export default {
+  props: ['roleList'],
+  data() {
+    return {
+      isShow: false,
+      role: {
+        roleName: '',
+        roleValue: '',
+        tips: ''
       },
-			handleCancel() {
-				this.role.tips = "";
-				this.$refs.addRoleForm.resetFields();
-				this.isShow = false
-			}
-		}
-	}
+      ruleValidate: {
+        roleName: [
+          {
+            required: true,
+            message: '角色名称不能为空',
+            trigger: 'blur'
+          }
+        ],
+        roleValue: [
+          {
+            required: true,
+            message: '角色值不能为空',
+            trigger: 'blur'
+          }
+        ]
+      },
+      isHave: false
+    };
+  },
+  // mounted() {
+  //   console.log(this.$parent, '父类');
+  // },
+  methods: {
+    show() {
+      this.isShow = true;
+    },
+    handleSubmit() {
+      this.isHave = false;
+      this.$refs['addRoleForm'].validate(valid => {
+        this.roleList.forEach(item => {
+          if (item.roleName == this.role.roleName) {
+            this.isHave = true;
+          }
+        });
+        if (this.isHave) {
+          this.$message({ message: '角色名重复', type: 'error' });
+        } else {
+          this.$emit('on-success', this.role);
+          this.handleCancel();
+        }
+      });
+    },
+    handleCancel() {
+      this.role.tips = '';
+      this.$refs.addRoleForm.resetFields();
+      this.isShow = false;
+    }
+  }
+};
 </script>
