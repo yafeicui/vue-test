@@ -13,9 +13,7 @@
               <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          
         </div>
-        
       </div>
     </div>
   </div>
@@ -43,6 +41,9 @@
   }
 </script>
 <style scoped>
+.headerTem {
+  width: 100%;
+}
   .header-title {
     background: #3B8EDA;
     height: 60px;

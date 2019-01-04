@@ -60,23 +60,24 @@ export default {
           [paginationKey.current]: this.current - 1
         })
       }
-       
       this.$http(ajaxConfig).then(resp => {
         this.isTableLoading = false        
         if (resp.data && resp.data.data) {
-          if (paginationKey) {
-              // 有分页的情况条件,取列表字段
-              var listKeys = this.listKey.split('.')
-              var dataNode = resp.data.data
-              while (listKeys.length > 1) {
-                dataNode = dataNode[listKeys.shift()]
-              }
-              this.tableData = dataNode[listKeys[0]]
-              this.total = parseInt(dataNode[paginationKey.total])              
-          } else {
+          // if (paginationKey) {
+          //     // 有分页的情况条件,取列表字段
+          //     var listKeys = this.listKey.split('.')
+          //     var dataNode = resp.data.data
+          //     while (listKeys.length > 1) {
+          //       dataNode = dataNode[listKeys.shift()]
+          //     }
+          //     this.tableData = dataNode[listKeys[0]]
+              this.total = resp.data.total; 
+          //     console.log(this.tableData, 2)             
+          // } else {
               // 无分页，直接用顶层返还的列表数据
-              this.tableData = resp.data.data
-          }
+              this.tableData = resp.data.data;
+              // console.log(this.tableData, 1)
+          // }
         } else {
           this.tableData = []
         }        
@@ -121,7 +122,7 @@ export default {
     /**@augments
      * @private
      */
-    handleCurrentChange (val) {      
+    handleCurrentChange (val) {  
       this.current = val
       this.handleGetPaginationInfo()
     },
@@ -138,30 +139,31 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style scoped>
   .mixin-pagination {
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
   }
 </style>
-<style lang="less">
+<style>
   .ht-table-cpn {
-    .header-row {
+    width: 100%;
+  }
+  .ht-table-cpn .header-row {
       background: #e6e6e6;
     }
-    // 去除表格最后一行尾巴上的 1px  
-    .el-table::before{
-      height: 0!important;
-    }
-    // 去除表格单行下面的 1px
-    .el-table th.is-leaf, .el-table td {
-      border-bottom-style:none;
-    }
-    // 去除悬浮置顶的表格底部 1px
-    .el-table__fixed::before, .el-table__fixed-right::before{
-      height: 0;
-    }
+  // 去除表格最后一行尾巴上的 1px  
+  .el-table::before{
+    height: 0!important;
+  }
+  // 去除表格单行下面的 1px
+  .el-table th.is-leaf, .el-table td {
+    border-bottom-style:none;
+  }
+  // 去除悬浮置顶的表格底部 1px
+  .el-table__fixed::before, .el-table__fixed-right::before{
+    height: 0;
   }
   /*.ht-table-cpn.el-table::before{
     height: 0!important;

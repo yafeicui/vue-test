@@ -1,14 +1,13 @@
-import Vue from 'vue'
 export default {
-  getUsers: (state,value) => {
-    state.users = value
+  getUsers: (state, value) => {
+    state.users = value;
   },
   addCount: (state, value) => {
     // console.log(value, 'mutation')
-    state.count = value
+    state.count = value;
   },
-  desMuCount: (state) => {
+  desMuCount: state => {
     // console.log('减1')
-    state.count -= 2
+    state.count -= 2;
   }
-}
+};

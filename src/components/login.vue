@@ -25,140 +25,120 @@
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        loginForm: {
-          account: '',
-					password: '',
-        },
-        ruleInline: {
-					account: [{
-						required: true,
-						message: '请填写用户名',
-						trigger: 'blur'
-					}],
-					password: [{
-							required: true,
-							message: '请填写密码',
-							trigger: 'blur'
-						}
-					]
-				}
-      }
-    },
-    methods: {
-      handleSubmit() {
-        var loginData = {
-          name: this.loginForm.account,
-          password: this.loginForm.password
-        }
-        this.$http({
-          url: '/api/login',
-          method: 'post',
-          data: loginData
-        }).then((res) => {
-          if(res.data.code !== 9000) {
-            this.$message(res.data.message);
-          }else {
-            localStorage.setItem("userId", res.data.password);
-            localStorage.setItem("userName", res.data.account);
-            localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
-            this.$router.push({
-              path: '/system'
-            })
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      loginForm: {
+        account: '',
+        password: ''
+      },
+      ruleInline: {
+        account: [
+          {
+            required: true,
+            message: '请填写用户名',
+            trigger: 'blur'
           }
-        })
-        // var userList = this.$store.state.users;
-        // var isHave = false;
-        // var isRight = false;
-        // userList.forEach((item,index) => {
-        //   if(item.username === this.loginForm.account) {
-        //     isHave = true;
-        //     if(item.password == this.loginForm.password) {
-        //       isRight = true;
-        //     }
-        //   }
-        // })
-        // if(!isHave) {
-        //   this.$message('没有此用户');
-        //   return 
-        // }
-        // if(!isRight) {
-        //   this.$message('密码不正确');
-        //   return 
-        // }
-        // if(isHave && isRight) {
-        //   localStorage.setItem("userId", this.loginForm.password);
-				// 	localStorage.setItem("userName", this.loginForm.account);
-				// 	localStorage.setItem("url", 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg');
-        //   this.$router.push({
-        //     path: '/system'
-        //   })
-        // }
+        ],
+        password: [
+          {
+            required: true,
+            message: '请填写密码',
+            trigger: 'blur'
+          }
+        ]
       }
-    },
-    mounted () {
-      localStorage.removeItem('userId');
-      localStorage.removeItem('userName');
+    };
+  },
+  methods: {
+    handleSubmit() {
+      var loginData = {
+        name: this.loginForm.account,
+        password: this.loginForm.password
+      };
+      this.$http({
+        url: '/api/login',
+        method: 'post',
+        data: loginData
+      }).then(res => {
+        axios.defaults.headers.common['accessToken'] = res.data.token;
+        localStorage.setItem('userId', res.data.password);
+        localStorage.setItem('userName', res.data.account);
+        localStorage.setItem('users', JSON.stringify(res.data));
+        localStorage.setItem('auth', res.data.token);
+        localStorage.setItem(
+          'url',
+          'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1230799154,4259669654&fm=27&gp=0.jpg'
+        );
+        this.$router.push({
+          path: '/system'
+        });
+      });
     }
+  },
+  mounted() {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
   }
+};
 </script>
 <style scoped>
-  .ht-page-content-wrap {
-    background: linear-gradient(top, #195a97, #3b8eda);
-    height: 100%;
-  }
-  .center-flex-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-	#login {
-		height: 100%;
-		background: #f0f0f0;
-	}
-	
-	.banner {
-    color: #f0f0f0;
-		font-size: 50px;
-		text-align: center;
-  }
-  
-	.box-card {
-		margin-top: 30px;
-    width: 480px;
-    height: 100%;
-    padding: 20px 0;
-    background: #f0f0f0;
-	}
-	
-	.title {
-    text-align: center;
-    color: #f0f0f0;
-		font-size: 20px;
-	}
-	
-	.submitBtn {
-		margin: 0px;
-		margin-top: 10px;
-	}
-	.submitBtn button {
-		width: 84%;
-	}
-	.remember {
-		padding-left: 90px;
-	}
+.ht-page-content-wrap {
+  background: linear-gradient(top, #195a97, #3b8eda);
+  height: 100%;
+}
+.center-flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+#login {
+  height: 100%;
+  background: #f0f0f0;
+}
+
+.banner {
+  color: #f0f0f0;
+  font-size: 50px;
+  text-align: center;
+}
+
+.box-card {
+  margin-top: 30px;
+  width: 480px;
+  height: 100%;
+  padding: 20px 0;
+  background: #f0f0f0;
+}
+
+.title {
+  text-align: center;
+  color: #f0f0f0;
+  font-size: 20px;
+}
+
+.submitBtn {
+  margin: 0px;
+  margin-top: 10px;
+}
+.submitBtn button {
+  width: 84%;
+}
+.remember {
+  padding-left: 90px;
+}
 </style>
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  #app {
-    height: 100%;
-  }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#app {
+  height: 100%;
+}
 </style>
 

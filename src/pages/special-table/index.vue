@@ -3,25 +3,12 @@
     <td-draggable element="el-table" :list="tableData" :data="tableData" :options="dragOptions" dragSelector="tbody" @end='endDrag' stripe highlight-current-row  header-row-class-name="header-row">
       <el-table-column resizable show-overflow-tooltip prop="name" label="姓名"></el-table-column>
       <el-table-column resizable show-overflow-tooltip prop="age" label="年龄"></el-table-column>
-      <!-- <el-table-column  type="index" label="序号" width="70">
-        <template slot-scope="scope">
-          {{1+scope.$index}}
-        </template>
-      </el-table-column> -->
-
-      <!-- <template v-for="column in columns">
-        <el-table-column v-if="column.formatter" :fixed="column.fixed" resizable show-overflow-tooltip :prop="column.prop" :key="column.prop" :label="column.label" :formatter="column.formatter" >
-        </el-table-column>
-        <el-table-column  v-else-if="column.operations" :fixed="column.fixed" :prop="column.prop" :label="column.label" :key="column.prop" >
-          <template slot-scope="scope">
-            <el-button v-for="(operate, index) in column.operations" :key="index" type="text" @click.native.prevent="operate.func(scope.$index, scope.row)">{{operate.label}}</el-button>
-          </template>
-        </el-table-column>
-
-        <el-table-column v-else resizable show-overflow-tooltip :fixed="column.fixed" :prop="column.prop"   :label="column.label" :key="column.prop" >
-        </el-table-column>
-      </template> -->
     </td-draggable>
+    <el-button @click="insertMongodb">添加mongodb数据</el-button>
+    <el-button @click="getMongodb">获取mongodb数据</el-button>
+    <el-button @click="updateMongodb">修改mongodb数据</el-button>
+    <el-button @click="delMongodb">删除mongodb数据</el-button>
+    <el-button @click="fetchTable">拖拽后的table</el-button>
   </div>
 </template>
 
@@ -58,8 +45,35 @@ export default {
   },
   methods: {
     endDrag (data) {
-      // console.log('data: ', data)
+      console.log('data: ', data)
       // console.log(this.tableData)
+    },
+    fetchTable() {
+      console.log(this.tableData, '拖拽后的table')
+    },
+    insertMongodb() {
+      this.$http({
+        url: `/api/testRouter/mongodbCui/save`,
+        method: 'post',
+      })
+    },
+    getMongodb() {
+      this.$http({
+        url: `/api/testRouter/mongodbCui/get`,
+        method: 'get',
+      })
+    },
+    updateMongodb() {
+      this.$http({
+        url: `/api/testRouter/mongodbCui/update`,
+        method: 'put',
+      })
+    },
+    delMongodb() {
+      this.$http({
+        url: `/api/testRouter/mongodbCui/delete`,
+        method: 'delete',
+      })
     }
   }
 }

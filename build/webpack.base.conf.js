@@ -7,7 +7,7 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
+// https://www.cnblogs.com/tugenhua0707/p/9384953.html#4088006 webpack配置
 
 
 module.exports = {
@@ -31,6 +31,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.less$/,
+        loader: "style-loader!css-loader!less-loader",
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -78,5 +82,14 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
+  },
+  devServer: {
+    contentBase: path.join(__dirname, "dist"),
+    port: 8010,
+    // hot: true,
+    open: true,
+    headers: {
+      'X-foo': '112233'
+    }
   }
 }
