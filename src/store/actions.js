@@ -1,9 +1,9 @@
 export default {
-  changeCount({commit, state}, payload) {
+  changeCount({ commit, state }, payload) {
     // console.log(payload, 'action')
-    commit('addCount', payload)
+    commit('addCount', payload);
   },
-  desCount({commit, state}) {
+  desCount({ commit, state }) {
     commit('desMuCount');
-  }
-}
+  },
+};

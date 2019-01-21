@@ -43,7 +43,7 @@ export default {
     return {
       ruleForm: {
         roleName: '',
-        roleType: ''
+        roleType: '',
       },
       roleList: [],
       num: 3,
@@ -56,18 +56,23 @@ export default {
         // 分页信息字段
         size: 'size',
         current: 'current',
-        total: 'totalElements'
+        total: 'totalElements',
       },
-      testNum: 11
+      testNum: 11,
     };
   },
   computed: {
-    ...mapGetters(['count'])
+    // ...mapGetters(['count']),
+    ...mapState({ count: 'count' }),
+    // ...mapState(['count']),
   },
   components: {
     AddDialog,
-    EditDialog
+    EditDialog,
     // htTable
+  },
+  mounted() {
+    console.log(this.$store.getters.count, 9999);
   },
   methods: {
     ...mapActions(['changeCount', 'desCount']),
@@ -152,7 +157,7 @@ export default {
         roleName: val.roleName,
         roleValue: val.roleValue,
         tips: val.tips,
-        id: this.num++
+        id: this.num++,
       });
     },
     editSuccess(val) {
@@ -175,7 +180,7 @@ export default {
       this.$confirm('确实删除该文件?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
         .then(() => {
           this.roleList.forEach((item, index) => {
@@ -185,13 +190,13 @@ export default {
           });
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: '删除成功!',
           });
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消删除',
           });
         });
     },
@@ -214,9 +219,9 @@ export default {
       this.tableAjaxConfig = {
         url: '/api/system/role/tableList',
         method: 'get',
-        params: Object.assign({}, this.ruleForm)
+        params: Object.assign({}, this.ruleForm),
       };
-    }
+    },
   },
   beforeMount() {
     // this.getState();
@@ -252,7 +257,7 @@ export default {
         .$confirm('确定由授信跳转到当前页面？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
         })
         .then(() => {
           next();
@@ -269,7 +274,7 @@ export default {
       .$confirm('确定离开当前页面？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       })
       .then(() => {
         next();
@@ -277,6 +282,6 @@ export default {
       .catch(() => {
         next(false);
       });
-  }
+  },
 };
 </script>
