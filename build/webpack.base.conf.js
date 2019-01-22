@@ -88,13 +88,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    port: 8010,
-    // hot: true,
-    open: true,
-    headers: {
-      'X-foo': '112233',
-    },
-  },
 };

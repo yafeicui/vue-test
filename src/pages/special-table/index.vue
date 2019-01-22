@@ -13,74 +13,78 @@
 </template>
 
 <script>
-import TdDraggable from '@/components/draggable'
+import TdDraggable from '@/components/draggable';
+import TdDraggable111 from '@/components/draggable';
 export default {
   name: 'elementDraggableTable',
-  data () {
+  data() {
     return {
       dragOptions: {
-        draggable: '.el-table__row'
+        draggable: '.el-table__row',
       },
       tableData: [
-        { name: 'zhang', age: 12},
-        { name: 'luo', age: 33},
-        { name: 'tang', age: 34},
-        { name: 'yang', age: 23},
-        { name: 'wang', age: 13},
+        { name: 'zhang', age: 12 },
+        { name: 'luo', age: 33 },
+        { name: 'tang', age: 34 },
+        { name: 'yang', age: 23 },
+        { name: 'wang', age: 13 },
       ],
-      columns: [{
-        prop: 'no',
-        label: '盘点单号'
-      }, {
-        prop: 'type',
-        label: '盘点类型',
-        formatter: function (item) {
-          return 'cc'
-        }
-      }]
-    }
+      columns: [
+        {
+          prop: 'no',
+          label: '盘点单号',
+        },
+        {
+          prop: 'type',
+          label: '盘点类型',
+          formatter: function(item) {
+            return 'cc';
+          },
+        },
+      ],
+    };
   },
   components: {
-    TdDraggable
+    TdDraggable,
   },
   methods: {
-    endDrag (data) {
-      console.log('data: ', data)
+    endDrag(data) {
+      console.log('data: ', data);
       // console.log(this.tableData)
     },
     fetchTable() {
-      console.log(this.tableData, '拖拽后的table')
+      console.log(this.tableData, '拖拽后的table');
     },
     insertMongodb() {
       this.$http({
         url: `/api/testRouter/mongodbCui/save`,
         method: 'post',
-      })
+      });
     },
     getMongodb() {
       this.$http({
         url: `/api/testRouter/mongodbCui/get`,
         method: 'get',
-      })
+      });
     },
     updateMongodb() {
       this.$http({
         url: `/api/testRouter/mongodbCui/update`,
         method: 'put',
-      })
+      });
     },
     delMongodb() {
       this.$http({
         url: `/api/testRouter/mongodbCui/delete`,
         method: 'delete',
-      })
-    }
-  }
-}
+      });
+    },
+  },
+};
 </script>
-<style> 
-  .header-row th {
-    background: rgb(204, 199, 199)!important;
-    color: #fff;
-  }
+<style>
+.header-row th {
+  background: rgb(204, 199, 199) !important;
+  color: #fff;
+}
 </style>
