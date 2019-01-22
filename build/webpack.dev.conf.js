@@ -26,7 +26,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: {
       rewrites: [{ from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') }],
     },
-    hot: true,
+    hot: false,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
@@ -37,7 +37,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
-      poll: config.dev.poll,
+      poll: false,
     },
   },
   plugins: [
@@ -62,16 +62,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       },
     ]),
   ],
-  stats: {
-    colors: true,
-    errors: true,
-    errorDetails: true,
-    moduleTrace: true,
-    performance: true,
-    publicPath: true,
-    warnings: true,
-    version: true,
-  },
 });
 
 module.exports = new Promise((resolve, reject) => {

@@ -7,7 +7,7 @@
     <el-button @click="insertMongodb">添加mongodb数据</el-button>
     <el-button @click="getMongodb">获取mongodb数据</el-button>
     <el-button @click="updateMongodb">修改mongodb数据</el-button>
-    <el-button @click="delMongodb">删除mongodb数据</el-button>
+    <el-button @click="delMongodb">删除mongodb数据111</el-button>
     <el-button @click="fetchTable">拖拽后的table</el-button>
   </div>
 </template>
